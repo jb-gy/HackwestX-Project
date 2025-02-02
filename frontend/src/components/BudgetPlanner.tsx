@@ -27,10 +27,25 @@ const BudgetPlanner: React.FC = () => {
   const toast = useToast();
 
 
-  const handleUpdateBudget = (index: number, newBudget: number) => {
-    const newCategories = [...categories];
-    newCategories[index].budget = newBudget;
-    setCategories(newCategories);
+  const handleUpdateBudget = (index: number, value: string) => {
+    const newBudget = parseFloat(value);
+    
+    if (isNaN(newBudget) || newBudget < 0) {
+      toast({
+        title: 'Invalid Input',
+        description: 'Please enter a valid positive number',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    setCategories(prevCategories => 
+      prevCategories.map((cat, i) => 
+        i === index ? { ...cat, budget: newBudget } : cat
+      )
+    );
 
     toast({
       title: 'Budget Updated',
@@ -53,7 +68,9 @@ const BudgetPlanner: React.FC = () => {
                 <Input
                   type="number"
                   value={category.budget}
-                  onChange={(e) => handleUpdateBudget(index, Number(e.target.value))}
+                  onChange={(e) => handleUpdateBudget(index, e.target.value)}
+                  min="0"
+                  step="0.01"
                   width="120px"
                 />
                 <Text>${category.spent.toFixed(2)} spent</Text>

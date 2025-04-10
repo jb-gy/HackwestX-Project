@@ -3,7 +3,7 @@
 A full-stack budget planning application that helps users track expenses, manage budgets, and visualize spending patterns.
 
 
-PS: This codebase in incomplete, and only covers the scope of my contributions to the project.
+PS: This codebase is incomplete, and only covers the scope of my contributions to the project.
 
 ## Features
 
